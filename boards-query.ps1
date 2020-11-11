@@ -1,7 +1,7 @@
 Param(
-   [string]$OrganizationName = "siddamoolam",
+   [string]$OrganizationName = "$orgname",
    [string]$collectionurl = "https://dev.azure.com/$($OrganizationName)/",
-   [string]$project = "Azure-boards",
+   [string]$project = "$projectname",
    [string]$token = "y7jqzo72rxah5dy3thndwwsvfjzuixemjge7tta6ak4r4tdsmmya"
 )
 
