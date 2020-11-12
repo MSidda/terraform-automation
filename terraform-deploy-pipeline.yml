@@ -1,0 +1,50 @@
+# Starter pipeline
+
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- terraform
+
+pool:
+  vmImage: 'vs2017-win2016'
+
+variables:
+ 
+  TemplatePath: 'terraform_templates'
+  
+steps:
+- task: AzureKeyVault@1
+  displayName: Get Sensitive info from Key vault
+  inputs:
+    azureSubscription: 'keyvaultconnection'
+    KeyVaultName: 'tlqldcdntestkeyvault'
+    SecretsFilter: '*'
+
+- task: Terraform@2
+  displayName: Terraform Init
+  inputs:
+    TemplatePath: '$(TemplatePath)'
+    Arguments: 'init -backend-config="access_key=$(stg-key)"'
+    InstallTerraform: true
+    Version: '0.11.8'
+    UseAzureSub: false
+    
+- task: Terraform@2
+  displayName: Terraform Plan
+  inputs:
+    TemplatePath: '$(TemplatePath)'
+    Arguments: 'plan -var "tenant_id=$(tenant-id)" -var "subscription_id=$(subscription-id)" -var "client_id=$(client-id)" -var "client_secret=$(client-secret)"'
+    InstallTerraform: true
+    Version: '0.11.8'
+    UseAzureSub: false
+
+- task: Terraform@2
+  displayName: Terraform apply
+  inputs:
+    TemplatePath: '$(TemplatePath)'
+    Arguments: 'apply --auto-approve -var "tenant_id=$(tenant-id)" -var "subscription_id=$(subscription-id)" -var "client_id=$(client-id)" -var "client_secret=$(client-secret)"'
+    InstallTerraform: true
+    Version: '0.11.8'
+    UseAzureSub: false

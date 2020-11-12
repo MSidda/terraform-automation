@@ -1,0 +1,21 @@
+variable "subscription_id" {}
+variable "client_id" {}
+variable "client_secret" {}
+variable "tenant_id" {}
+variable "location" {}
+variable "resource_group_name" {}
+variable "service_principal_end_date" {}
+
+variable "cluster_name" {}
+variable "aks_dns_prefix" {}
+variable "aks_node_size" {}
+variable "aks_node_count" {}
+variable "aks_node_user_name" {}
+variable "enable_aks_auto_scale" {}
+variable "node_max_count" {}
+variable "node_min_count" {}
+variable "aks_rbac" {}
+variable "kubernetes_verrsion" {}
+variable "ssh_public_key" {}
+variable "acr_sku" {}
+variable "key_vault_sku_name" {}
